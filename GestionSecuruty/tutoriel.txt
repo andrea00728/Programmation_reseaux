@@ -1,0 +1,33 @@
+📂 api/           # Gestion des appels API
+│   │   ├── axiosClient.js # Configuration d'Axios
+
+ ├── 📂 assets/        # Ressources spécifiques au projet (images, icônes, styles globaux...)
+
+
+  📂 services/      # Services pour abstraction des logiques métiers
+│   │   ├── authService.js
+│   │   ├── userService.js
+
+
+  ├── 📂 utils/         # Fonctions utilitaires (place pour les controlle champs tout et tout )
+│   │   ├── formatDate.js
+│   │   ├── validateEmail.js
+
+.env                  # Variables d'environnement
+
+ 📂 routes/        # Gestion des routes avec React Router
+
+
+  📂 pages/         # Pages principales(place pour les page principal )
+│   │   ├── Home.jsx
+│   │   ├── Login.jsx
+│   │   ├── Dashboard.jsx
+│   │   ├── NotFound.jsx
+
+
+ 📂 layouts/       # Mise en page des pages (Header, Sidebar, etc.)
+│   │   ├── MainLayout.jsx
+│   │   └── AuthLayout.jsx
+
+
+📂 components/    # Composants réutilisables
