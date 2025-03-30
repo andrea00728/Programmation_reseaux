@@ -4,7 +4,7 @@ interface StateContextType {
     user:any|null;
     token:string|null;
     setUser:(any:null)=>void;
-    setToken:(string:null)=>void;
+    setToken:(string:string|null)=>void;
 }
 
 const StateContext=createContext<StateContextType>({
