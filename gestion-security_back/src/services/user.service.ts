@@ -22,14 +22,14 @@ export class UserService {
 
 
   async register(registerDto: registerDto): Promise<{ message: string }> {
-    const { username, email, password } = registerDto;
+    const { username, email, password,role } = registerDto;
     const existingUser = await this.userRepository.findOne({ where: [{ email }, { username }] });
     if (existingUser) {
       throw new BadRequestException('Email ou username déjà utilisé');
     }
     const hashedPassword = await bcrypt.hash(password, 10);
 
-    const user = this.userRepository.create({ username, email, password: hashedPassword });
+    const user = this.userRepository.create({ username, email, password: hashedPassword,role });
     await this.userRepository.save(user);
 
     return { message: 'Utilisateur enregistré avec succès' };
@@ -54,7 +54,7 @@ export class UserService {
     if (!isPasswordValid) {
       throw new UnauthorizedException('Email ou mot de passe incorrect');
     }
-    const token = this.jwtService.sign({ id: user.id, email: user.email });
+    const token = this.jwtService.sign({ id: user.id, email: user.email,role:user.role });
 
     return { access_token: token };
   }
