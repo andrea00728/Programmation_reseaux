@@ -44,18 +44,27 @@ export class UserService {
    */
   
 
-  async login(loginDto: LoginDto): Promise<{ access_token: string }> {
+  async login(loginDto: LoginDto): Promise<{ access_token: string; user: Partial<User> }> {
     const { email, password } = loginDto;
     const user = await this.userRepository.findOne({ where: { email } });
     if (!user) {
       throw new UnauthorizedException('Email ou mot de passe incorrect');
     }
+
     const isPasswordValid = await bcrypt.compare(password, user.password);
     if (!isPasswordValid) {
       throw new UnauthorizedException('Email ou mot de passe incorrect');
     }
-    const token = this.jwtService.sign({ id: user.id, email: user.email,role:user.role });
+    const token = this.jwtService.sign({ id: user.id, email: user.email, role: user.role });
+    return {
+        access_token: token,
+        user: {
+            id: user.id,
+            username: user.username,
+            email: user.email,
+            role: user.role
+        }
+    };
+}
 
-    return { access_token: token };
-  }
 }
