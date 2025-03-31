@@ -1,37 +1,32 @@
-import React, { useEffect, useRef, useState } from "react";
-
+import React, { useRef, useState } from "react";
+import { useStateContext } from "../../context/ContextProvider";
 import { useNavigate } from "react-router-dom";
+import { CyberRegisterService } from "../../services/Authontication";
 import {AlertTitle, TextField} from '@mui/material';
-import { LoginService } from "../services/Authontication";
-import { useStateContext } from "../context/ContextProvider";
-const LoginPage:React.FC=()=>{
+const CyberRegister:React.FC=()=>{
+    const usernameRef=useRef<HTMLInputElement>(null);
     const emailRef=useRef<HTMLInputElement>(null);
     const passwordRef=useRef<HTMLInputElement>(null);
-    const {setToken,setUser,setRole,token}=useStateContext();
+    const {setToken,setUser,setRole}=useStateContext();
     const [success,setSuccess]=useState<string>('');
     const [error,setError]=useState<string|null>(null);
     const [loading,setLoading]=useState<boolean>(false);
     const navigate=useNavigate();
 
     const onSubmit=(event:React.FormEvent<HTMLFormElement>)=>{
-        LoginService(event,{
+        CyberRegisterService(event,{
+            usernameRef,
             emailRef,
             passwordRef,
             setUser,
-            setRole,
             setToken,
+            setRole,
             setSuccess,
             setError,
             setLoading,
             navigate,
         }); 
     };
-
-    useEffect(() => {
-        if (token) {
-          navigate('/');
-        }
-      }, [token, navigate]);    
  return (
     <div>
         <div>
@@ -40,6 +35,13 @@ const LoginPage:React.FC=()=>{
         </div>
      <form onSubmit={onSubmit}>
      <div>
+        <TextField
+        label="pseudo"
+        required
+        id="username"
+        name="username"
+        inputRef={usernameRef}
+        />
         <TextField
         label="email"
         required
@@ -58,10 +60,10 @@ const LoginPage:React.FC=()=>{
         />
     </div>
     <div>
-        <button type="submit">connexion</button>
+        <button type="submit">cree compte</button>
     </div>
      </form>
     </div>
  );
 };
-export default LoginPage;
+export default CyberRegister;

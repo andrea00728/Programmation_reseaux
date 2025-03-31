@@ -6,7 +6,7 @@ const GuestLayout:React.FC=()=>{
     const {token}=useStateContext();
 
     if(token){
-        return <Navigate to='/dashboard'/>
+        return <Navigate to='/'    replace/>
     };
  return (
     <div>

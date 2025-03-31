@@ -1,22 +1,40 @@
 import {createBrowserRouter, Navigate, RouteObject} from 'react-router-dom';
-import DefaultLayout from '../layouts/DefaultLayout';
-import Dashboard from '../pages/Dashboard';
 import GuestLayout from '../layouts/GuestLayout';
 import LoginPage from '../pages/LoginPage';
-import RegisterPage from '../pages/RegisterPage';
 import NotFoundPage from '../pages/NotFoundPage';
+import CyberLayout from '../layouts/CyberLayout';
+import EntrepriseLayout from '../layouts/EntrepriseLayout';
+import CyberDashboard from '../pages/cyberPage/CyberDashboard';
+import EntrepriseDashboard from '../pages/entreprisePage/EntrepriseDashboard';
+import EntrepriseRegister from '../pages/entreprisePage/EntrepriseRegister';
+import CyberRegister from '../pages/cyberPage/CyberRegister';
 const routes:RouteObject[]=[
 {
     path:'/',
-    element:<DefaultLayout/>,
+    element:<CyberLayout/>,
     children:[
         {
             path:'/',
-            element:<Navigate to='/dasboard'/>
+            element:<Navigate to='/CyberDashboard'/>
         },
         {
-            path:'/dashboard',
-            element:<Dashboard/>
+            path:'/CyberDashboard',
+            element:<CyberDashboard/>
+        },
+    ],
+
+},
+{
+    path:'/',
+    element:<EntrepriseLayout/>,
+    children:[
+        {
+            path:'/',
+            element:<Navigate to='/EntrepriseDashboard'/>
+        },
+        {
+            path:'/EntrepriseDashboard',
+            element:<EntrepriseDashboard/>
         },
     ],
 
@@ -34,8 +52,12 @@ const routes:RouteObject[]=[
             element:<LoginPage/>
         },
         {
-            path:'/register',
-            element:<RegisterPage/>
+            path:'/EntrepriseRegister',
+            element:<EntrepriseRegister/>
+        },
+        {
+            path:'/CyberRegister',
+            element:<CyberRegister/>
         }
     ],
 },

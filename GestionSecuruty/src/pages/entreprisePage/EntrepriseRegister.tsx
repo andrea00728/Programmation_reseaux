@@ -1,24 +1,25 @@
 import React, { useRef, useState } from "react";
-import { useStateContext } from "../context/ContextProvider";
+import { useStateContext } from "../../context/ContextProvider";
 import { useNavigate } from "react-router-dom";
-import { RegisterService } from "../services/Authontication";
+import { EntrepriseRegisterService } from "../../services/Authontication";
 import {AlertTitle, TextField} from '@mui/material';
-const RegisterPage:React.FC=()=>{
+const EntrepriseRegister:React.FC=()=>{
     const usernameRef=useRef<HTMLInputElement>(null);
     const emailRef=useRef<HTMLInputElement>(null);
     const passwordRef=useRef<HTMLInputElement>(null);
-    const {setToken,setUser}=useStateContext();
+    const {setToken,setUser,setRole}=useStateContext();
     const [success,setSuccess]=useState<string>('');
     const [error,setError]=useState<string|null>(null);
     const [loading,setLoading]=useState<boolean>(false);
     const navigate=useNavigate();
 
     const onSubmit=(event:React.FormEvent<HTMLFormElement>)=>{
-        RegisterService(event,{
+        EntrepriseRegisterService(event,{
             usernameRef,
             emailRef,
             passwordRef,
             setUser,
+            setRole,
             setToken,
             setSuccess,
             setError,
@@ -65,4 +66,4 @@ const RegisterPage:React.FC=()=>{
     </div>
  );
 };
-export default RegisterPage;
+export default EntrepriseRegister;
