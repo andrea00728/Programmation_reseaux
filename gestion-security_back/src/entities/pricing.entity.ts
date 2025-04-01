@@ -15,9 +15,9 @@ export class Pricing{
     @Column({type: 'timestamp', default : ()=>'NOW()'})
     created_at: Date;
 
-    // @ManyToOne(()=> User, (user) => user.pricings, {
-    //     onDelete: 'CASCADE',
-    // })
+    @ManyToOne(()=> User, (user) => user.pricings, {
+        onDelete: 'CASCADE',
+    })
 
     @JoinColumn({name:'user_id'})
     user: User;
