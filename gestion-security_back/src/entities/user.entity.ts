@@ -1,4 +1,5 @@
-import {Column, Entity, PrimaryGeneratedColumn} from 'typeorm';
+import {Column, Entity, OneToMany, PrimaryGeneratedColumn} from 'typeorm';
+import { Pricing } from './pricing.entity';
 
 export enum UserRole{
     CYBER='cyber',
@@ -25,4 +26,9 @@ enum:UserRole,
 default:UserRole.ENTREPRISE,
 })
 role:UserRole;
+
+@OneToMany(() => Pricing, (pricing) => pricing.user, {
+    cascade: true,
+})
+pricings: Pricing[];
 }
