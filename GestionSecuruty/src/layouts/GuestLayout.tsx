@@ -1,6 +1,6 @@
 import React from "react";
 import { useStateContext } from "../context/ContextProvider";
-import { Navigate, Outlet } from "react-router-dom";
+import { Link, Navigate, Outlet } from "react-router-dom";
 
 const GuestLayout:React.FC=()=>{
     const {token,role}=useStateContext();
@@ -14,9 +14,26 @@ const GuestLayout:React.FC=()=>{
             return <Navigate to='/EntrepriseDashboard' replace/>
         }
     };
+
+    const navLinks=[
+        {path:'/CyberRegister',label:'Cyber'},
+        {path:'/EntrepriseRegister',label:'Entreprise'},
+    ];
+
  return (
     <div>
-        <Outlet/>
+        <div className="flex gap-3 bg-[]">
+        {navLinks.map((items)=>(
+            <div>
+                <Link key={items.path} to={items.path}>
+                    {items.label}
+                </Link>
+            </div>
+       ))}
+        </div>
+       <div>
+       <Outlet/>
+       </div>
     </div>
  );
 };
