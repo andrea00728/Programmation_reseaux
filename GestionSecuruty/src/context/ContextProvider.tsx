@@ -1,4 +1,4 @@
-import { createContext, ReactNode, useContext, useEffect, useState } from "react";
+import { createContext, ReactNode, useContext,useState } from "react";
 
 interface StateContextType {
     user:any|null;
@@ -27,16 +27,6 @@ export const ContextProvider=({children}:ContextProviderProps)=>{
     const [token,_setToken]=useState<string|null>(()=>sessionStorage.getItem("ACCESS_TOKEN")||null);
     const [role,_setRole]=useState<string|null>(()=>sessionStorage.getItem("USER_ROLE")||null);
 
-    useEffect(()=>{
-        console.log("token recupere par le COntextProvider:",token);
-        if(!token){
-            _setToken(null);
-            _setRole(null);
-            sessionStorage.removeItem("ACCESS_TOKEN");
-            sessionStorage.removeItem("USER_ROLE");
-        }
-    },[token]);
-
     const setToken=(token:string|null)=>{
         _setToken(token);
         if(token){
@@ -53,7 +43,7 @@ export const ContextProvider=({children}:ContextProviderProps)=>{
         if (role) {
           sessionStorage.setItem("USER_ROLE", role);
         } else {
-          sessionStorage.removeItem("USER_ROLE");
+            sessionStorage.removeItem("USER_ROLE");
         }
     }
 
