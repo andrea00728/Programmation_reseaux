@@ -20,11 +20,28 @@ const GuestLayout:React.FC=()=>{
         {path:'/EntrepriseRegister',label:'Entreprise'},
     ];
 
+    const navLogin=[
+        {path:'/login',label:'Connexion'},
+    ]
+
  return (
-    <div>
-        <div className="flex gap-3 bg-[]">
+    <>
+        <header>
+            <nav className="flex mt-2 ">
+                <h4 className="ml-10  font-semibold text-2xl">lo<span className="text-[#4F1C51]">go</span></h4>
+                <div className="bg-[#4F1C51] text-white w-35 h-10 p-1.5 text-center font-semibold rounded-full ml-auto mr-10">
+                    {navLogin.map((item)=>(
+                        <Link key={item.path} to={item.path}>
+                            {item.label}
+                        </Link>
+                    ))}
+                </div>
+            </nav>
+        </header>
+     <div className="border border-gray-300 rounded-[6%] w-[40%] h-[400px] mx-auto mt-30">
+        <div className="flex gap-27  mb-5 mt-4 ">
         {navLinks.map((items)=>(
-            <div>
+            <div className="mx-auto   text-white items-center justify-center text-center bg-[#210F37]  w-40 h-9 p-1 font-semibold rounded-full cursor-pointer">
                 <Link key={items.path} to={items.path}>
                     {items.label}
                 </Link>
@@ -35,6 +52,7 @@ const GuestLayout:React.FC=()=>{
        <Outlet/>
        </div>
     </div>
+    </>
  );
 };
 export default GuestLayout;

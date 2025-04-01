@@ -15,15 +15,7 @@ const LoginPage:React.FC=()=>{
 
     const onSubmit=(event:React.FormEvent<HTMLFormElement>)=>{
         LoginService(event,{
-            emailRef,
-            passwordRef,
-            setUser,
-            setRole,
-            setToken,
-            setSuccess,
-            setError,
-            setLoading,
-            navigate,
+            emailRef,passwordRef,setUser,setRole,setToken,setSuccess, setError, setLoading, navigate,
         }); 
     };
 
@@ -39,7 +31,7 @@ const LoginPage:React.FC=()=>{
             {success && <AlertTitle color="green">{success}</AlertTitle>}
         </div>
      <form onSubmit={onSubmit}>
-     <div>
+     <div className="space-y-12 gap-7 mx-auto mt-15  grid w-120 mt-10">
         <TextField
         label="email"
         required
@@ -56,9 +48,11 @@ const LoginPage:React.FC=()=>{
         name="password"
         inputRef={passwordRef}
         />
+            <div>
+        <button type="submit"
+        className="bg-[#210F37] text-white mx-auto rounded-full w-120 m-aut h-10 cursor-pointer rounded-full"
+        >connexion</button>
     </div>
-    <div>
-        <button type="submit">connexion</button>
     </div>
      </form>
     </div>

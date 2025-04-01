@@ -15,16 +15,7 @@ const EntrepriseRegister:React.FC=()=>{
 
     const onSubmit=(event:React.FormEvent<HTMLFormElement>)=>{
         EntrepriseRegisterService(event,{
-            usernameRef,
-            emailRef,
-            passwordRef,
-            setUser,
-            setRole,
-            setToken,
-            setSuccess,
-            setError,
-            setLoading,
-            navigate,
+            usernameRef,emailRef,passwordRef,setUser,setRole,setToken,setSuccess,setError,setLoading,navigate,
         }); 
     };
  return (
@@ -34,7 +25,7 @@ const EntrepriseRegister:React.FC=()=>{
             {success && <AlertTitle color="green">{success}</AlertTitle>}
         </div>
      <form onSubmit={onSubmit}>
-     <div>
+     <div className="space-y-12 gap-7 mx-auto   grid w-120 mt-10">
         <TextField
         label="pseudo"
         required
@@ -58,9 +49,13 @@ const EntrepriseRegister:React.FC=()=>{
         name="password"
         inputRef={passwordRef}
         />
+         <div>
+    <button 
+        className="bg-[#210F37] text-white mx-auto rounded-full w-120 m-aut h-10 cursor-pointer rounded-full"
+        type="submit"
+        >cree compte
+        </button>
     </div>
-    <div>
-        <button type="submit">cree compte</button>
     </div>
      </form>
     </div>
