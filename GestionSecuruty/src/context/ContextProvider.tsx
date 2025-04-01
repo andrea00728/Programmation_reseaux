@@ -43,7 +43,7 @@ export const ContextProvider=({children}:ContextProviderProps)=>{
         if (role) {
           sessionStorage.setItem("USER_ROLE", role);
         } else {
-          sessionStorage.removeItem("USER_ROLE");
+            sessionStorage.removeItem("USER_ROLE");
         }
     }
 
