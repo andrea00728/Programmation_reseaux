@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import {AlertTitle, TextField} from '@mui/material';
 import { LoginService } from "../services/Authontication";
 import { useStateContext } from "../context/ContextProvider";
+import { textFieldStyles } from "../utiles/style";
 const LoginPage:React.FC=()=>{
     const emailRef=useRef<HTMLInputElement>(null);
     const passwordRef=useRef<HTMLInputElement>(null);
@@ -39,6 +40,7 @@ const LoginPage:React.FC=()=>{
         type="email"
         name="email"
         inputRef={emailRef}
+        sx={textFieldStyles}        
         />
         <TextField
         label="mot de passe "
@@ -47,10 +49,11 @@ const LoginPage:React.FC=()=>{
         type="password"
         name="password"
         inputRef={passwordRef}
+        sx={textFieldStyles}
         />
             <div>
         <button type="submit"
-        className="bg-[#210F37] text-white mx-auto rounded-full w-120 m-aut h-10 cursor-pointer rounded-full"
+        className="bg-cyan-800 text-black mx-auto rounded-full w-120 m-aut h-10 cursor-pointer rounded-full"
         >connexion</button>
     </div>
     </div>

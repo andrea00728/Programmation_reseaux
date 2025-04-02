@@ -3,6 +3,7 @@ import { useStateContext } from "../../context/ContextProvider";
 import { useNavigate } from "react-router-dom";
 import { EntrepriseRegisterService } from "../../services/Authontication";
 import {AlertTitle, TextField} from '@mui/material';
+import { textFieldStyles } from "../../utiles/style";
 const EntrepriseRegister:React.FC=()=>{
     const usernameRef=useRef<HTMLInputElement>(null);
     const emailRef=useRef<HTMLInputElement>(null);
@@ -32,6 +33,7 @@ const EntrepriseRegister:React.FC=()=>{
         id="username"
         name="username"
         inputRef={usernameRef}
+        sx={textFieldStyles}
         />
         <TextField
         label="email"
@@ -40,6 +42,7 @@ const EntrepriseRegister:React.FC=()=>{
         type="email"
         name="email"
         inputRef={emailRef}
+        sx={textFieldStyles}
         />
         <TextField
         label="mot de passe "
@@ -48,10 +51,11 @@ const EntrepriseRegister:React.FC=()=>{
         type="password"
         name="password"
         inputRef={passwordRef}
+        sx={textFieldStyles}
         />
          <div>
     <button 
-        className="bg-[#210F37] text-white mx-auto rounded-full w-120 m-aut h-10 cursor-pointer rounded-full"
+        className="bg-cyan-800 text-black mx-auto rounded-full w-120 m-aut h-10 cursor-pointer rounded-full"
         type="submit"
         >cree compte
         </button>

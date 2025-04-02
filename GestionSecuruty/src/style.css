@@ -1,0 +1,6 @@
+.cyber-input {
+    border: 2px solid cyan;
+    background: black;
+    color: cyan;
+    animation: neonGlow 1.5s infinite alternate;
+}

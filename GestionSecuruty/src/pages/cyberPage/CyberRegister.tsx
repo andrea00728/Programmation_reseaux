@@ -3,6 +3,7 @@ import { useStateContext } from "../../context/ContextProvider";
 import { useNavigate } from "react-router-dom";
 import { CyberRegisterService } from "../../services/Authontication";
 import {AlertTitle, TextField} from '@mui/material';
+import { textFieldStyles } from "../../utiles/style";
 const CyberRegister:React.FC=()=>{
     const usernameRef=useRef<HTMLInputElement>(null);
     const emailRef=useRef<HTMLInputElement>(null);
@@ -41,6 +42,7 @@ const CyberRegister:React.FC=()=>{
         id="username"
         name="username"
         inputRef={usernameRef}
+        sx={textFieldStyles}
         />
         <TextField
         label="email"
@@ -49,6 +51,7 @@ const CyberRegister:React.FC=()=>{
         type="email"
         name="email"
         inputRef={emailRef}
+        sx={textFieldStyles}
         />
         <TextField
         label="mot de passe "
@@ -57,10 +60,11 @@ const CyberRegister:React.FC=()=>{
         type="password"
         name="password"
         inputRef={passwordRef}
+        sx={textFieldStyles}
         />
          <div>
     <button 
-        className="bg-[#210F37] text-white mx-auto rounded-full w-120 m-aut h-10 cursor-pointer "
+        className="bg-cyan-800 text-black mx-auto rounded-full w-120 m-aut h-10 cursor-pointer rounded-full"
         type="submit"
         >cree compte
         </button>
