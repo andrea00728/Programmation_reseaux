@@ -102,7 +102,7 @@ const GuestLayout: React.FC = () => {
               </Link>
             ))}
           </nav>
-          <div className="mt-6 bg-black/90 p-10 rounded-[6%] shadow-neon backdrop-blur-md border border-cyan-200">
+          <div className="mt-6 bg-black/90 p-10 rounded-lg shadow-neon backdrop-blur-md border border-cyan-200">
             <Outlet />
           </div>
         </div>
