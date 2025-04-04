@@ -4,8 +4,8 @@ interface StateContextType {
     user:any|null;
     token:string|null;
     role:string|null;
-    setUser:(any:null)=>void;
-    setToken:(string:string|null)=>void;
+    setUser:(user:any|null)=>void;
+    setToken:(token:string|null)=>void;
     setRole:(role:string|null)=>void;
 }
 
@@ -31,7 +31,7 @@ export const ContextProvider=({children}:ContextProviderProps)=>{
         _setToken(token);
         if(token){
             sessionStorage.setItem("ACCESS_TOKEN",token);
-            _setRole(role);       
+            // _setRole(role);       
         }else{
             sessionStorage.removeItem("ACCESS_TOKEN");
             sessionStorage.removeItem("USER_ROLE");
@@ -39,7 +39,7 @@ export const ContextProvider=({children}:ContextProviderProps)=>{
     };
 
     const setRole = (role: string | null) => {
-        _setRole(role);
+        _setRole(role); 
         if (role) {
           sessionStorage.setItem("USER_ROLE", role);
         } else {

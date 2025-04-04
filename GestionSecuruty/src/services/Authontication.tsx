@@ -151,24 +151,29 @@ export const LoginService=async(
     setSuccess('');
 
     const payloads={
-        email:emailRef.current?.value?.trim||'',
+        email:emailRef.current?.value?.trim()||'',
         password:passwordRef.current?.value||'',
+        // email: emailRef.current?.value || '',
+        // password: passwordRef.current?.value || '',
     };
+    console.log("Payload envoyé au backend:", payloads);
     if(!payloads.email || !payloads.password){
         setError("tout les champs doivent etre remplis");
         setLoading(false);
         return;
     }
+    
     try {
         const { data } = await axiosCLient.post('/auth/login', payloads);
     
         if (!data.user) {
             throw new Error("Utilisateur non trouvé dans la réponse du serveur.");
         }
-    
+        console.log("Réponse API:", data);
         setUser(data.user);
         setToken(data.access_token);
         setRole(data.user.role);
+        console.log("Rôle défini:", data.user.role);
         setSuccess(data.message || 'Connexion réussie !');
         const redirectPath =
           data.user.role === 'cyber' ? '/CyberDashboard' :
@@ -181,8 +186,7 @@ export const LoginService=async(
         setError(errorMessage);
     } finally {
         setLoading(false);
-    }
-    
+    }  
 };
 
 

@@ -6,7 +6,7 @@ import * as THREE from "three";
 const GuestLayout: React.FC = () => {
   const { token, role } = useStateContext();
   const mountRef = useRef<HTMLDivElement | null>(null);
-
+  console.log("GuestLayout-token",token,"role:",role);
   useEffect(() => {
     if (!mountRef.current) return;
 
