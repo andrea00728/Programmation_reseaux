@@ -8,6 +8,8 @@ import { AuthModule } from './modules/auth/auth.module';
 import { UserModule } from './modules/user.module';
 import { Pricing } from './entities/pricing.entity';
 import { PricingModule } from './modules/pricing/pricing.module'; // Importez le PricingModule
+import { Devices } from './devices/devices.entity';
+import { DevicesModule } from './devices/devices.module';
 
 @Module({
   imports: [
@@ -23,13 +25,14 @@ import { PricingModule } from './modules/pricing/pricing.module'; // Importez le
         username: configService.get('DB_USERNAME'),
         password: configService.get('DB_PASSWORD'),
         database: configService.get('DB_DATABASE'),
-        entities: [User, Pricing],
+        entities: [User, Pricing,Devices],
         synchronize: true,
       }),
       inject: [ConfigService],
     }),
     AuthModule,
     UserModule,
+    DevicesModule,
     PricingModule,
   ],
   controllers: [AppController], 
