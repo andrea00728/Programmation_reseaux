@@ -2,20 +2,20 @@ import { Controller, Get, Post, Patch, Delete, Body, Param, ParseIntPipe, UseGua
 import { PricingService } from '../services/pricing.service';
 import { CreatePricingDto } from '../dto/pricingDTO/create-pricing.dto';
 import { UpdatePricingDto } from '../dto/pricingDTO/update-pricing.dto';
-import { JwtAuthGuard } from '../modules/auth/jwt-auth.guard'; // À créer
+import { JwtAuthGuard } from '../modules/auth/jwt-auth.guard';
 import { Roles } from '../modules/auth/role.decorator';
 import { RoleGuard } from '../modules/auth/role.guard';
-import { GetUser } from '../modules/auth/get-user.decorator'; // À créer
+import { GetUser } from '../modules/auth/get-user.decorator';
 import { User } from '../entities/user.entity';
 
 @Controller('pricing')
-@UseGuards(JwtAuthGuard) // Authentification requise pour toutes les routes
+@UseGuards(JwtAuthGuard) 
 export class PricingController {
   constructor(private readonly pricingService: PricingService) {}
 
   @Post()
-  @UseGuards(RoleGuard) // Garde supplémentaire pour vérifier le rôle
-  @Roles('cyber') // Seuls les utilisateurs avec rôle 'cyber' peuvent créer
+  @UseGuards(RoleGuard) 
+  @Roles('cyber') 
   async create(@Body() createPricingDto: CreatePricingDto, @GetUser() user: User) {
     return this.pricingService.create(createPricingDto, user.id);
   }
