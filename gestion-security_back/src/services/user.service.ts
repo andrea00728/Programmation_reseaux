@@ -56,7 +56,7 @@ export class UserService {
       throw new UnauthorizedException('Email ou mot de passe incorrect');
     }
     const token = this.jwtService.sign({ id: user.id, email: user.email, role: user.role });
-    return {
+    const response= {
         access_token: token,
         user: {
             id: user.id,
@@ -65,6 +65,8 @@ export class UserService {
             role: user.role
         }
     };
+    console.log("Réponse renvoyée au frontend:", response);
+    return response;
 }
 
 }
