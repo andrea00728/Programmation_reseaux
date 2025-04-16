@@ -1,9 +1,17 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import {  getListDevicesNow, modelDevices, PaiementCyber } from "../services/devices.service";
-import { Dialog, DialogTitle, DialogContent, DialogFooter } from "../../components/ui/dialog";
-import { Button } from "../../components/ui/button";
-
+import {
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogActions,
+  Button,
+  FormControlLabel,
+  Checkbox,
+  TextField,
+  Typography,
+} from '@mui/material';
 const api = "http://localhost:3001/devices";
 
 const Dashboard = () => {
@@ -132,27 +140,55 @@ const [searchDevices,setSearchDevices]=useState<string>('');
           </tbody>
         </table>
       </div>
+      <Dialog open={isModalOpen}  onClick={() => setIsModalOpen(false)} fullWidth maxWidth="sm">
+      <DialogTitle>Gestion du Temps</DialogTitle>
+      <DialogContent dividers>
+        <FormControlLabel
+          control={
+            <Checkbox
+              checked={isHours}
+              onChange={() => setIsHours(!isHours)}
+              name="isHours"
+            />
+          }
+          label="Heure"
+        />
 
-      <Dialog open={isModalOpen} onOpenChange={() => setIsModalOpen(false)}>
-      
-        <DialogContent>
-        <DialogTitle>Gestion du Temps</DialogTitle>
-       <div className="flex">
-       <input type="radio" readOnly  name="" id="" checked={isHours} onClick={()=>isHours?setIsHours(false):setIsHours(true)}/><label htmlFor="">Heure</label>
-       </div>
-          <label htmlFor="">{isHours?"Entrer la durée en heure":"Entrer la durée en minute"}</label>
-          <input type="number"  value={dataCyb.duree} name="duree" placeholder={isHours?"Entrer la durée en heure":"Entrer la durée en minute"} className="w-full p-2 border rounded mt-2 cursor-pointer" onChange={handleChange} />
-          <label htmlFor="">Entrer le numéro de l'appareil</label>
-          <input type="number"  value={dataCyb.numero} name="numero" placeholder="Entrer le numéro" className="w-full p-2 border rounded mt-2 cursor-pointer" onChange={handleChange} />
-       
-          <DialogFooter>
-          <Button onClick={payement} className="cursor-pointer">Enregistrer</Button>
-          <Button variant="secondary" className="cursor-pointer" onClick={() => setIsModalOpen(false)}>Annuler</Button>
-        </DialogFooter>
-               </DialogContent>
-       
-      </Dialog>
+        <Typography variant="subtitle1" gutterBottom>
+          {isHours ? "Entrer la durée en heure" : "Entrer la durée en minute"}
+        </Typography>
+        <TextField
+          type="number"
+          name="duree"
+          value={dataCyb.duree}
+          onChange={handleChange}
+          fullWidth
+          placeholder={isHours ? "Durée en heure" : "Durée en minute"}
+          margin="normal"
+        />
 
+        <Typography variant="subtitle1" gutterBottom>
+          Entrer le numéro de l'appareil
+        </Typography>
+        <TextField
+          type="number"
+          name="numero"
+          value={dataCyb.numero}
+          onChange={handleChange}
+          fullWidth
+          placeholder="Numéro de l'appareil"
+          margin="normal"
+        />
+      </DialogContent>
+      <DialogActions>
+        <Button onClick={payement} variant="contained" color="primary">
+          Enregistrer
+        </Button>
+        <Button onClick={() => setIsModalOpen(false)} variant="outlined" color="secondary">
+          Annuler
+        </Button>
+      </DialogActions>
+    </Dialog>
       
     </div>
   );

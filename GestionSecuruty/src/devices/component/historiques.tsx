@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { deletDevices, getAllDevicesHistory, modelDevices } from "../services/devices.service";
-import { Trash2 } from "lucide-react"; // Import de l'icône poubelle
+import DeleteIcon from '@mui/icons-material/Delete'; // Import de l'icône poubelle
 
 export default function Historique() {
   const [dataHistorique, setDataHistorique] = useState<modelDevices[]>([]);
@@ -37,7 +37,7 @@ export default function Historique() {
               listHistorique();
             }}
             >
-              <Trash2 size={20} />
+              <DeleteIcon />
             </button>
           </div>
         ))}

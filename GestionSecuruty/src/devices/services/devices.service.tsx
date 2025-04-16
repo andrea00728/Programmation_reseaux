@@ -1,4 +1,4 @@
-import axios from "../../../ModulesNode/axios";
+import axios from "axios";
 
 const api="http://localhost:3000/devices";
 export interface modelDevices{
@@ -8,7 +8,7 @@ export interface modelDevices{
     hours:number;
     price:string;
     numero:number;
-    date:Date|string;
+    dateDevices:Date|string;
     statut:string;
 }
 
