@@ -3,86 +3,32 @@ import axios from "axios";
 import {  getListDevicesNow, modelDevices, PaiementCyber } from "../services/devices.service";
 import { Dialog, DialogTitle, DialogContent, DialogFooter } from "../../components/ui/dialog";
 import { Button } from "../../components/ui/button";
-import io from "socket.io-client";
+
 const api = "http://localhost:3001/devices";
 
 const Dashboard = () => {
-  const [notifications, setNotifications] = useState<string[]>([]); 
+
   const [devices, setDevices] = useState<modelDevices[]>([]);
   const [connectedCount, setConnectedCount] = useState(0);
   const [blockedCount, setBlockedCount] = useState(0);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const isCyber = true;
+  const [isHours,setIsHours]=useState<boolean>(false);
   const [dataCyb, setDataCyb] = useState({ prix: 1000, duree: 0, par: 15, id: 0, numero: 0 });
-
-  // const socket = io("http://localhost:3000");
-
-  //notifications
-  useEffect(() => {
-    // Écouter les notifications en temps réel
-    // socket.on("notification", (device: any) => {
-    //   triggerNotification(device);
-    //   triggerSound();
-    //   triggerVibration();
-    //   setNotifications((prevNotifications) => [
-    //     ...prevNotifications,
-    //     `Le temps est écoulé pour l'appareil ${device.ip}`,
-    //   ]);
-    // });
-
-    // return () => {
-    //   socket.off("notification"); // Nettoyer l'écouteur quand le composant est démonté
-    // };
-  }, []);
-
-  // const triggerNotification = (device: any) => {
-  //   if (Notification.permission === "granted") {
-  //     new Notification(`Le temps est écoulé pour l'appareil ${device.ip}`, {
-  //       body: `Adresse MAC: ${device.mac || "N/A"} - Numéro: ${device.numero}`,
-  //       icon: "https://www.example.com/icon.png",
-  //     });
-  //   }
-  // };
-
-  // const triggerSound = () => {
-  //   const audio = new Audio("https://www.example.com/alert-sound.mp3");
-  //   audio.play();
-  // };
-
-  // const triggerVibration = () => {
-  //   if ("vibrate" in navigator) {
-  //     navigator.vibrate([500]); // Vibration de 500ms
-  //   }
-  // };
-
-  // const checkTime = () => {
-  //   devices.forEach((device) => {
-  //     if (device.statut === "connecter" && device.hours > 0) {
-  //       const remainingTime = device.hours - 1; // Exemple de calcul de temps restant
-  //       if (remainingTime <= 0) {
-  //         // Si le temps est écoulé, informer le serveur pour notifier tous les clients
-  //         socket.emit("device-time-up", device); // Envoie l'événement au serveur
-  //       }
-  //     }
-  //   });
-  // };
-
-  // useEffect(() => {
-    
-  //   const timer = setInterval(checkTime, 1000); // Vérifier toutes les secondes
-  //   return () => clearInterval(timer); // Nettoyer l'intervalle lors du démontage du composant
-  // }, [devices]);
-
-  //notifications
-
+  const [TabHours,setTabHours]=useState<boolean>(false);
+const [searchDevices,setSearchDevices]=useState<string>('');
   const showInputDuree = (idD: number, duree: number) => {
     setDataCyb({ ...dataCyb, id: idD, duree: duree || 0 });
     setIsModalOpen(true);
   };
 
   const payement = async () => {
+    if(isHours){
+      dataCyb.duree=dataCyb.duree*60;
+    }
     const pay = await PaiementCyber(dataCyb.prix, dataCyb.par, dataCyb.duree, dataCyb.id, dataCyb.numero);
     console.log(pay);
+    fetchDevices();
     setIsModalOpen(false);
   };
 
@@ -135,6 +81,7 @@ const Dashboard = () => {
       </div>
 
       <div className="overflow-x-auto">
+        <input type="text" name="" id="" value={searchDevices} placeholder="recherche par mac..." className="border border-white" onChange={(e)=>setSearchDevices(e.target.value)}/>
         <table className="w-full table-auto border-collapse border border-gray-600">
           <thead>
             <tr className="bg-gray-800">
@@ -144,7 +91,11 @@ const Dashboard = () => {
               {isCyber && (
                 <>
                   <th className="p-3 border">Prix</th>
-                  <th className="p-3 border">Durée</th>
+                  <th className="p-3 border">Durée
+                   en heure <input type="radio" name="" id="" readOnly checked={TabHours} onClick={()=>TabHours?(setTabHours(false)
+                  
+                  ):setTabHours(true)}/>
+                  </th>
                   <th className="p-3 border">Numéro</th>
                 </>
               )}
@@ -152,7 +103,7 @@ const Dashboard = () => {
             </tr>
           </thead>
           <tbody>
-            {devices.map((device) => (
+            {devices.filter(s=>s.mac?.toUpperCase().includes(searchDevices.toUpperCase())).map((device) => (
               <tr key={device.id} className="text-center border">
                 <td className="p-3 border">{device.ip}</td>
                 <td className="p-3 border">{device.mac || "N/A"}</td>
@@ -160,7 +111,7 @@ const Dashboard = () => {
                 {isCyber && (
                   <>
                     <td className="p-3 border">{device.price}</td>
-                    <td className="p-3 border">{device.hours}</td>
+                    <td className="p-3 border">{TabHours?device.hours/60+"h":device.hours+"min"}</td>
                     <td className="p-3 border">{device.numero}</td>
                   </>
                 )}
@@ -183,25 +134,26 @@ const Dashboard = () => {
       </div>
 
       <Dialog open={isModalOpen} onOpenChange={() => setIsModalOpen(false)}>
-        <DialogTitle>Gestion du Temps</DialogTitle>
+      
         <DialogContent>
-          <input type="number" value={dataCyb.duree} name="duree" placeholder="Entrer la durée en minute" className="w-full p-2 border rounded mt-2" onChange={handleChange} />
-          <input type="number" value={dataCyb.numero} name="numero" placeholder="Entrer le numéro" className="w-full p-2 border rounded mt-2" onChange={handleChange} />
-        </DialogContent>
-        <DialogFooter>
-          <Button onClick={payement}>Enregistrer</Button>
-          <Button variant="secondary" onClick={() => setIsModalOpen(false)}>Annuler</Button>
+        <DialogTitle>Gestion du Temps</DialogTitle>
+       <div className="flex">
+       <input type="radio" readOnly  name="" id="" checked={isHours} onClick={()=>isHours?setIsHours(false):setIsHours(true)}/><label htmlFor="">Heure</label>
+       </div>
+          <label htmlFor="">{isHours?"Entrer la durée en heure":"Entrer la durée en minute"}</label>
+          <input type="number"  value={dataCyb.duree} name="duree" placeholder={isHours?"Entrer la durée en heure":"Entrer la durée en minute"} className="w-full p-2 border rounded mt-2 cursor-pointer" onChange={handleChange} />
+          <label htmlFor="">Entrer le numéro de l'appareil</label>
+          <input type="number"  value={dataCyb.numero} name="numero" placeholder="Entrer le numéro" className="w-full p-2 border rounded mt-2 cursor-pointer" onChange={handleChange} />
+       
+          <DialogFooter>
+          <Button onClick={payement} className="cursor-pointer">Enregistrer</Button>
+          <Button variant="secondary" className="cursor-pointer" onClick={() => setIsModalOpen(false)}>Annuler</Button>
         </DialogFooter>
+               </DialogContent>
+       
       </Dialog>
 
-      <div>
-        <h2>Notifications  :</h2>
-        <ul>
-          {notifications.map((notif, index) => (
-            <li key={index}>{notif}</li>
-          ))}
-        </ul>
-      </div>
+      
     </div>
   );
 };
