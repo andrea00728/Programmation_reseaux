@@ -13,12 +13,12 @@ export class DevicesService {
         @InjectRepository(Devices)
         private devicesRepo: Repository<Devices>,
     ) {}
-
+//show devices
     async showDevices(): Promise<Devices[]> {
       await this.scanNetwork();
-       return await this.devicesRepo.find();
+       return await this.devicesRepo.find({where:{dateDevices:new Date()}});
     }
-
+//scan network
     async scanNetwork() {
       const networkIP = await this.getNetworkIP();
       
@@ -157,7 +157,7 @@ export class DevicesService {
             });
         });
     }
-
+//Supprimer un appareils de la base de données
     async deleteDevice(id: number) {
         await this.devicesRepo.delete(id);
     }
